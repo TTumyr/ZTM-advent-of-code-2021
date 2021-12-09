@@ -12,17 +12,15 @@ import java.util.stream.Stream;
 public class FileOperation {
     public static String getTextFile(String url) throws IOException {
         String filepath = url.toString().replace("file:/", "").replace("\\", "/");
-        if(filepath != null) {
-            FileReader fileToImport = new FileReader(filepath);
-            StringBuilder stringbuilder = new StringBuilder();
-            Scanner scanner = new Scanner(fileToImport);
-            while(scanner.hasNextLine()) {
-                stringbuilder.append(scanner.nextLine());
-                stringbuilder.append("\n");
-            }
-            return stringbuilder.toString();
+        FileReader fileToImport = new FileReader(filepath);
+        StringBuilder stringbuilder = new StringBuilder();
+        Scanner scanner = new Scanner(fileToImport);
+        while(scanner.hasNextLine()) {
+            stringbuilder.append(scanner.nextLine());
+            stringbuilder.append("\n");
         }
-        return "File does not exist";
+        scanner.close();
+        return stringbuilder.toString();
     }
     public static List<Path> listDirectories(Path path) throws IOException {
         List<Path> result;

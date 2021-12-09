@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="dev.tumyr.controller.MainView"
@@ -17,6 +17,17 @@
     <TextArea fx:id="fx_solution" GridPane.columnIndex="0" GridPane.rowIndex="1" editable="false" wrapText="true"/>
     <ListView fx:id="fx_tasks" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"
               minWidth="90" onMouseClicked="#handleClickView">
-
     </ListView>
+    <GridPane GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.rowSpan="2" hgap="10">
+        <Label fx:id="fx_jdk_version" GridPane.columnIndex="1" GridPane.rowIndex="0">
+            <font>
+                <Font size="9"/>
+            </font>
+        </Label>
+        <Label fx:id="fx_fx_version" GridPane.columnIndex="3" GridPane.rowIndex="0">
+            <font>
+                <Font size="9"/>
+            </font>
+        </Label>
+    </GridPane>
 </GridPane>

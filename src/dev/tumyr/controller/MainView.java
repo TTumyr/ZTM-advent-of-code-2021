@@ -2,6 +2,7 @@ package dev.tumyr.controller;
 
 import dev.tumyr.model.Task;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
@@ -22,27 +23,32 @@ public class MainView {
     @FXML
     private TextArea fx_solution;
     @FXML
-    private ListView fx_tasks;
+    private ListView<Task> fx_tasks;
+    @FXML
+    private Label fx_jdk_version;
+    @FXML
+    private Label fx_fx_version;
 
-    private URL baseURL;
-    private URL tasksURL;
     private List<Path> paths;
-    private ArrayList<Task> tasks = new ArrayList<Task>();
+    private final ArrayList<Task> tasks = new ArrayList<Task>();
 
     @FXML
     public void init(URL baseURL) throws URISyntaxException, IOException {
-        this.baseURL = baseURL;
-        this.tasksURL = new URL(baseURL.toString() + "adventofcode/y2021/");
-        this.paths = FileOperation.listDirectories(Paths.get(this.tasksURL.toURI()));
+        URL tasksURL = new URL(baseURL.toString() + "adventofcode/y2021/");
+        this.paths = FileOperation.listDirectories(Paths.get(tasksURL.toURI()));
         setTasks();
         fx_tasks.getItems().setAll(tasks);
         fx_tasks.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
+        fx_jdk_version.setText(System.getProperty("java.vendor.version"));
+        fx_fx_version.setText("JavaFX " + System.getProperty("javafx.version"));
     }
     @FXML
     public void handleClickView() {
         Task task = (Task) fx_tasks.getSelectionModel().getSelectedItem();
-        this.fx_description.setText(task.getDescription());
-        this.fx_solution.setText(task.getSolution());
+        if(task != null) {
+            this.fx_description.setText(task.getDescription());
+            this.fx_solution.setText(task.getSolution());
+        }
     }
     public void setTasks() {
         this.paths.forEach(name -> {

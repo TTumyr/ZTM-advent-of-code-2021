@@ -10,13 +10,14 @@ import javafx.stage.Stage;
 import java.net.URL;
 
 public class Main extends Application {
-    private URL baseURL = getClass().getResource("");
+    private final URL baseURL = getClass().getResource("");
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("view/main.fxml"));
         Parent root = loader.load();
         MainView controller = loader.getController();
+        assert baseURL != null;
         controller.init(baseURL);
         primaryStage.setTitle("ZTM advent of code 2021");
         primaryStage.setScene(new Scene(root, 320, 400));
