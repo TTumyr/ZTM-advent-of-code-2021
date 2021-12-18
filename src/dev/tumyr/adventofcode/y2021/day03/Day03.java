@@ -1,17 +1,17 @@
-package dev.tumyr.adventofcode.y2021.day3;
+package dev.tumyr.adventofcode.y2021.day03;
 
 import dev.tumyr.controller.FileOperation;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Day3 {
+public class Day03 {
     private final String data;
     private final ArrayList<String> binaryList = new ArrayList<String>();
     private Integer partOne = 0;
     private Integer partTwo = 0;
 
-    public Day3() throws IOException {
+    public Day03() throws IOException {
         data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
     }

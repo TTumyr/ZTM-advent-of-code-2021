@@ -1,4 +1,4 @@
-package dev.tumyr.adventofcode.y2021.day1;
+package dev.tumyr.adventofcode.y2021.day01;
 
 import dev.tumyr.controller.FileOperation;
 
@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Day1 {
+public class Day01 {
     private final String data;
     private final ArrayList<Integer> depths = new ArrayList<Integer>();
     private Integer partOne = 0;
@@ -19,7 +19,7 @@ public class Day1 {
             depths.add(Integer.parseInt(scanner.nextLine()));
         }
     }
-    public Day1() throws IOException {
+    public Day01() throws IOException {
         this.data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
     }

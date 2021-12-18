@@ -1,16 +1,16 @@
-package dev.tumyr.adventofcode.y2021.day5;
+package dev.tumyr.adventofcode.y2021.day05;
 
 import dev.tumyr.controller.FileOperation;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Day5 {
+public class Day05 {
     private final String data;
     private final ArrayList<ArrayList<String>> ventList = new ArrayList<ArrayList<String>>();
     private Integer[][] grid;
 
-    public Day5() throws IOException {
+    public Day05() throws IOException {
         data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
     }

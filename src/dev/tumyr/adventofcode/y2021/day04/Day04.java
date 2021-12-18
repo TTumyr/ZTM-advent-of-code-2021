@@ -1,11 +1,11 @@
-package dev.tumyr.adventofcode.y2021.day4;
+package dev.tumyr.adventofcode.y2021.day04;
 
 import dev.tumyr.controller.FileOperation;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Day4 {
+public class Day04 {
     private final String data;
     private ArrayList<Integer> numbersToDraw = new ArrayList<Integer>();
     private ArrayList<ArrayList<ArrayList<Integer>>> tables = new ArrayList<>();
@@ -13,7 +13,7 @@ public class Day4 {
     private Integer partOne = 0;
     private Integer partTwo = 0;
 
-    public Day4() throws IOException {
+    public Day04() throws IOException {
         data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
     }
