@@ -10,7 +10,6 @@ import javafx.scene.control.TextArea;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -55,7 +54,6 @@ public class MainView {
         this.paths.forEach(varPath -> {
             String targetPath = FileOperation.convertWinPath(varPath.toString());
             String[] arrPath = targetPath.split(DefaultVariables.getFolderAoc2021() + "/");
-
             if(arrPath.length > 1) {
                 String packageName = arrPath[1];
                 String description = "";
@@ -66,12 +64,8 @@ public class MainView {
                 try {
                     description = FileOperation.getTextFile(targetPath + "/" + DefaultVariables.getDescription());
                     Class<?> dailyClass = Class.forName(DefaultVariables.getClassPathAoc2021() + packageName + "." + packageName.substring(0,1).toUpperCase() + packageName.substring(1));
-                    Object daily = dailyClass.getDeclaredConstructor().newInstance();
-                    Method method;
-                    method = daily.getClass().getMethod(DefaultVariables.getDailyReturnFunction());
-                    method.setAccessible(true);
-                    String solution = method.invoke(daily).toString();
-                    this.tasks.add(new Task(label, description, solution));
+                    Object classConstructor = dailyClass.getDeclaredConstructor().newInstance();
+                    this.tasks.add(new Task(label, description, classConstructor));
                 } catch (IOException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
                     e.printStackTrace();
                 }
