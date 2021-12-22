@@ -1,5 +1,6 @@
 package dev.tumyr.controller;
 
+import dev.tumyr.config.DefaultVariables;
 import dev.tumyr.model.Task;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -34,7 +35,7 @@ public class MainView {
 
     @FXML
     public void init(URL baseURL) throws URISyntaxException, IOException {
-        URL tasksURL = new URL(baseURL.toString() + "adventofcode/y2021/");
+        URL tasksURL = new URL(baseURL.toString() + DefaultVariables.getPathAoc2021());
         this.paths = FileOperation.listDirectories(Paths.get(tasksURL.toURI()));
         setTasks();
         fx_tasks.getItems().setAll(tasks);
@@ -44,32 +45,30 @@ public class MainView {
     }
     @FXML
     public void handleClickView() {
-        Task task = (Task) fx_tasks.getSelectionModel().getSelectedItem();
+        Task task = fx_tasks.getSelectionModel().getSelectedItem();
         if(task != null) {
             this.fx_description.setText(task.getDescription());
             this.fx_solution.setText(task.getSolution());
         }
     }
     public void setTasks() {
-        this.paths.forEach(name -> {
-            String[] arrPath = name.toString().split("y2021\\\\");
-            String label;
-            String description = "";
+        this.paths.forEach(varPath -> {
+            String targetPath = FileOperation.convertWinPath(varPath.toString());
+            String[] arrPath = targetPath.split(DefaultVariables.getFolderAoc2021() + "/");
+
             if(arrPath.length > 1) {
-                label = arrPath[1];
-                String toUrl = name.toString();
+                String packageName = arrPath[1];
+                String description = "";
+                String label = packageName.toUpperCase().charAt(0) +
+                        packageName.split("\\d+")[0].substring(1) + " " +
+                        packageName.split("\\D")[packageName.split("\\D").length - 1]
+                                .replace("0", "");
                 try {
-                    description = FileOperation.getTextFile(toUrl + "/description.txt");
-                    Class<?> dailyClass = Class.forName("dev.tumyr.adventofcode.y2021." + label + "." + label.substring(0,1).toUpperCase() + label.substring(1));
+                    description = FileOperation.getTextFile(targetPath + "/" + DefaultVariables.getDescription());
+                    Class<?> dailyClass = Class.forName(DefaultVariables.getClassPathAoc2021() + packageName + "." + packageName.substring(0,1).toUpperCase() + packageName.substring(1));
                     Object daily = dailyClass.getDeclaredConstructor().newInstance();
-                    Method[] methods = dailyClass.getDeclaredMethods();
-                    Method method = null;
-                    for (Method value : methods) {
-                        if (value.getName().equals("solve")) {
-                            method = value;
-                        }
-                    }
-                    method = daily.getClass().getMethod("solve");
+                    Method method;
+                    method = daily.getClass().getMethod(DefaultVariables.getDailyReturnFunction());
                     method.setAccessible(true);
                     String solution = method.invoke(daily).toString();
                     this.tasks.add(new Task(label, description, solution));

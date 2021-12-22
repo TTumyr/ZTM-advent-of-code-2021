@@ -11,16 +11,21 @@ import java.util.stream.Stream;
 
 public class FileOperation {
     public static String getTextFile(String url) throws IOException {
+        url = convertWinPath(url);
         String filepath = url.toString().replace("file:/", "").replace("\\", "/");
-        FileReader fileToImport = new FileReader(filepath);
-        StringBuilder stringbuilder = new StringBuilder();
-        Scanner scanner = new Scanner(fileToImport);
-        while(scanner.hasNextLine()) {
-            stringbuilder.append(scanner.nextLine());
-            stringbuilder.append("\n");
+        try {
+            FileReader fileToImport = new FileReader(filepath);
+            StringBuilder stringbuilder = new StringBuilder();
+            Scanner scanner = new Scanner(fileToImport);
+            while(scanner.hasNextLine()) {
+                stringbuilder.append(scanner.nextLine());
+                stringbuilder.append("\n");
+            }
+            scanner.close();
+            return stringbuilder.toString();
+        } catch (Exception e) {
+            return "";
         }
-        scanner.close();
-        return stringbuilder.toString();
     }
     public static List<Path> listDirectories(Path path) throws IOException {
         List<Path> result;
@@ -29,5 +34,8 @@ public class FileOperation {
                     .collect(Collectors.toList());
         }
         return result;
+    }
+    public static String convertWinPath(String winPath) {
+        return winPath.replace("\\", "/");
     }
 }

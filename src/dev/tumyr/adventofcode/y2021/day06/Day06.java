@@ -1,26 +1,32 @@
 package dev.tumyr.adventofcode.y2021.day06;
 
-import dev.tumyr.controller.FileOperation;
+import dev.tumyr.model.Day;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
 
-public class Day06 {
-    private final String data;
+public class Day06 extends Day {
     ArrayList<Integer> lanternFish = new ArrayList<Integer>();
 
     public Day06() throws IOException {
-        data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
+        dailySolution();
     }
-    public String solve() {
+
+    private void dailySolution() {
+        getSolution();
+    }
+
+    @Override
+    public String getSolution() {
         long partOne = simulateFish(80);
         long partTwo = simulateFish(256);
         return "Part One: " + partOne + "\n" + "Part Two: " + partTwo;
     }
 
     private void convertData() {
-        Scanner scanner = new Scanner(data);
+        Scanner scanner = new Scanner(super.getData());
         while(scanner.hasNextLine()) {
             String[] strLine = scanner.nextLine().split("\\s*,\\s*");
             for (String s : strLine) {

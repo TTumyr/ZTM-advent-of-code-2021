@@ -1,28 +1,27 @@
 package dev.tumyr.adventofcode.y2021.day07;
 
-import dev.tumyr.controller.FileOperation;
+import dev.tumyr.model.Day;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Day07 {
-    private final String data;
+public class Day07 extends Day {
     ArrayList<Integer> horPosition = new ArrayList<Integer>();
 
     public Day07() throws IOException {
-        data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
+        dailySolution();
     }
-    public String solve() {
-        int partOne = findCheapestPosition("partOne");
-        int partTwo = findCheapestPosition("partTwo");
-        return "Part One: " + partOne + "\n" + "Part Two: " + partTwo;
+
+    private void dailySolution() {
+        super.setPartOne(findCheapestPosition("partOne"));
+        super.setPartTwo(findCheapestPosition("partTwo"));
     }
 
     private void convertData() {
-        Scanner scanner = new Scanner(data);
+        Scanner scanner = new Scanner(super.getData());
         while(scanner.hasNextLine()) {
             String[] strLine = scanner.nextLine().split("\\s*,\\s*");
             for (String s : strLine) {

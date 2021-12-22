@@ -1,43 +1,38 @@
 package dev.tumyr.adventofcode.y2021.day02;
 
-import dev.tumyr.controller.FileOperation;
+import dev.tumyr.model.Day;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
-public class Day02 {
-    private final String data;
+public class Day02 extends Day {
     private final ArrayList<String> actions = new ArrayList<String>();
     private Integer horPos = 0;
     private Integer verPos = 0;
     private Integer depth = 0;
     private Integer aim = 0;
-    private Integer partOne = 0;
-    private Integer partTwo = 0;
 
     public Day02() throws IOException {
-        data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
+        dailySolution();
+    }
+
+    private void dailySolution() {
+        calculatePos();
+        super.setPartOne(horPos * verPos);
+        super.setPartTwo(horPos * depth);
     }
 
     private void convertData() {
-        Scanner scanner = new Scanner(data);
+        Scanner scanner = new Scanner(super.getData());
         while(scanner.hasNextLine()) {
             actions.add(scanner.nextLine());
         }
+        scanner.close();
     }
 
-    public String solve() {
-        calculatePos();
-        calculateSolutions();
-        return "Part One: " + partOne + "\n" + "Part Two: " + partTwo;
-    }
-    private void calculateSolutions() {
-        partOne = horPos * verPos;
-        partTwo = horPos * depth;
-    }
     private void calculatePos() {
         actions.forEach(action -> {
            String[] current = action.split(" ");

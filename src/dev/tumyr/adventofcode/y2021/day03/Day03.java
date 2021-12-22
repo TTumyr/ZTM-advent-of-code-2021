@@ -1,34 +1,35 @@
 package dev.tumyr.adventofcode.y2021.day03;
 
-import dev.tumyr.controller.FileOperation;
+import dev.tumyr.model.Day;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Objects;
+import java.util.Scanner;
 
-public class Day03 {
-    private final String data;
+public class Day03 extends Day {
     private final ArrayList<String> binaryList = new ArrayList<String>();
-    private Integer partOne = 0;
-    private Integer partTwo = 0;
 
     public Day03() throws IOException {
-        data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
+        dailySolution();
+    }
+
+    private void dailySolution() {
+        super.setPartOne(calculatePowerConsumption());
+        super.setPartTwo(calculateLifeSupportRating());
     }
 
     private void convertData() {
-        Scanner scanner = new Scanner(data);
+        Scanner scanner = new Scanner(super.getData());
         while(scanner.hasNextLine()) {
             binaryList.add(scanner.nextLine());
         }
+        scanner.close();
     }
 
-    public String solve() {
-        calculatePowerConsumption();
-        calculateLifeSupportRating();
-        return "Part One: " + partOne + "\n" + "Part Two: " + partTwo;
-    }
-    private void calculatePowerConsumption() {
+    private Integer calculatePowerConsumption() {
         StringBuilder gammaBin = new StringBuilder();
         StringBuilder epsilonBin = new StringBuilder();
         int maxBinLength = getMaxListLength();
@@ -44,12 +45,12 @@ public class Day03 {
         }
         Integer gammaInt = Integer.parseInt(gammaBin.toString(), 2);
         Integer epsilonInt = Integer.parseInt(epsilonBin.toString(), 2);
-        this.partOne = gammaInt * epsilonInt;
+        return gammaInt * epsilonInt;
     }
-    private void calculateLifeSupportRating() {
+    private Integer calculateLifeSupportRating() {
         Integer oxygenRating = getRating("mostCommon");
         Integer co2Rating = getRating("leastCommon");
-        partTwo = oxygenRating * co2Rating;
+        return oxygenRating * co2Rating;
     }
     private Integer getMaxListLength() {
         String maxLength = binaryList.stream().max(Comparator.comparing(String::length)).orElse(null);

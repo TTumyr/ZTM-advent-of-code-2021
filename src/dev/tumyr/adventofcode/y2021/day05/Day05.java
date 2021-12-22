@@ -1,41 +1,42 @@
 package dev.tumyr.adventofcode.y2021.day05;
 
-import dev.tumyr.controller.FileOperation;
+import dev.tumyr.model.Day;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Day05 {
-    private final String data;
-    private final ArrayList<ArrayList<String>> ventList = new ArrayList<ArrayList<String>>();
+public class Day05 extends Day {
+    private final ArrayList<ArrayList<String>> VENT_LIST = new ArrayList<ArrayList<String>>();
     private Integer[][] grid;
 
     public Day05() throws IOException {
-        data = FileOperation.getTextFile( getClass().getResource("") + "data.txt");
         convertData();
+        dailySolution();
     }
-    public String solve() {
+
+    private void dailySolution() {
         setGridSize();
-        int partOne = locateDanger("partOne");
+        super.setPartOne(locateDanger("partOne"));
         clearGrid();
-        int partTwo = locateDanger("partTwo");
-        return "Part One: " + partOne + "\n" + "Part Two: " + partTwo;
+        super.setPartTwo(locateDanger("partTwo"));
     }
+
     private void convertData() {
-        Scanner scanner = new Scanner(data);
+        Scanner scanner = new Scanner(super.getData());
         while(scanner.hasNextLine()) {
             String[] strLine = scanner.nextLine().split("\\s*->\\s*");
             for (String s : strLine) {
                 ArrayList<String> line = new ArrayList<String>();
                 Collections.addAll(line, s.split(","));
-                ventList.add(line);
+                VENT_LIST.add(line);
             }
         }
         scanner.close();
     }
+
     private void setGridSize() {
         int x = 0, y = 0;
-        for (ArrayList<String> strings : ventList) {
+        for (ArrayList<String> strings : VENT_LIST) {
             for (int j = 0; j < strings.size(); j++) {
                 if (j % 2 == 0) {
                     if (Integer.parseInt(strings.get(j)) > x)
@@ -49,11 +50,11 @@ public class Day05 {
         grid = new Integer[y+1][x+1];
     }
     private void insertGridValues(String mode) {
-        for (int i = 1; i < ventList.size(); i += 2) {
-            int x1 = Integer.parseInt(ventList.get(i - 1).get(0));
-            int x2 = Integer.parseInt(ventList.get(i).get(0));
-            int y1 = Integer.parseInt(ventList.get(i - 1).get(1));
-            int y2 = Integer.parseInt(ventList.get(i).get(1));
+        for (int i = 1; i < VENT_LIST.size(); i += 2) {
+            int x1 = Integer.parseInt(VENT_LIST.get(i - 1).get(0));
+            int x2 = Integer.parseInt(VENT_LIST.get(i).get(0));
+            int y1 = Integer.parseInt(VENT_LIST.get(i - 1).get(1));
+            int y2 = Integer.parseInt(VENT_LIST.get(i).get(1));
             if(x1 == x2) {
                 for (int j = Math.min(y1, y2); j <= Math.max(y1, y2); j++) {
                     if(grid[j][x1] == null) grid[j][x1] = 1;
