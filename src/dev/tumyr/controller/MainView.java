@@ -9,7 +9,6 @@ import javafx.scene.control.SelectionMode;
 import javafx.scene.control.TextArea;
 
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Path;
@@ -60,13 +59,12 @@ public class MainView {
                 String label = packageName.toUpperCase().charAt(0) +
                         packageName.split("\\d+")[0].substring(1) + " " +
                         packageName.split("\\D")[packageName.split("\\D").length - 1]
-                                .replace("0", "");
+                                .replace("0", " ");
                 try {
                     description = FileOperation.getTextFile(targetPath + "/" + DefaultVariables.getDescription());
-                    Class<?> dailyClass = Class.forName(DefaultVariables.getClassPathAoc2021() + packageName + "." + packageName.substring(0,1).toUpperCase() + packageName.substring(1));
-                    Object classConstructor = dailyClass.getDeclaredConstructor().newInstance();
-                    this.tasks.add(new Task(label, description, classConstructor));
-                } catch (IOException | ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
+                    this.tasks.add(new Task(label, description, DefaultVariables.getClassPathAoc2021() + packageName +
+                            "." + packageName.substring(0,1).toUpperCase() + packageName.substring(1)));
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
             }

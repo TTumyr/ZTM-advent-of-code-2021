@@ -8,13 +8,13 @@ import java.util.Objects;
 
 public class Task {
     private String label;
-    private Object classConstructor;
+    private String dailyClassPath;
     private String solution;
 
-    public Task(String label, String description, Object classConstructor) {
+    public Task(String label, String description, String dailyClassPath) {
         this.label = label;
         this.description = description;
-        this.classConstructor = classConstructor;
+        this.dailyClassPath = dailyClassPath;
     }
 
     private String description;
@@ -49,14 +49,16 @@ public class Task {
         this.solution = solution;
     }
 
-    public void setDailyClass(Class<?> dailyClass) {
-        this.classConstructor = dailyClass;
+    public void setDailyClass(String dailyClassPath) {
+        this.dailyClassPath = dailyClassPath;
     }
-    private void solve() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+    private void solve() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException, ClassNotFoundException, InstantiationException {
+        Class<?> dailyClass = Class.forName(dailyClassPath);
+        Object dailyObject = dailyClass.getDeclaredConstructor().newInstance();
         Method method;
-        method = classConstructor.getClass().getMethod(DefaultVariables.getDailyReturnFunction());
+        method = dailyObject.getClass().getMethod(DefaultVariables.getDailyReturnFunction());
         method.setAccessible(true);
-        solution = method.invoke(classConstructor).toString();
+        solution = method.invoke(dailyObject).toString();
     }
     @Override
     public String toString() {

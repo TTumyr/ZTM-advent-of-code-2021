@@ -1,0 +1,17 @@
+.tasks {
+    -fx-background-color: teal;
+    -fx-cursor: hand;
+}
+.list-cell:filled:selected:focused, .list-cell:filled:selected {
+    -fx-background-color: linear-gradient(#004330 0%, #006350 25%, #008370 75%, #009380 100%);
+    -fx-text-fill: white;
+}
+
+.list-cell:even {
+    -fx-background-color: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: #00b3a0;
+    -fx-text-fill: white;
+}

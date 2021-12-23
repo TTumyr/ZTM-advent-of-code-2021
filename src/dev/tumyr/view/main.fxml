@@ -4,6 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
+<?import java.net.URL?>
 <GridPane xmlns="http://javafx.com/javafx"
           xmlns:fx="http://javafx.com/fxml"
           fx:controller="dev.tumyr.controller.MainView"
@@ -15,7 +16,7 @@
     </padding>
     <TextArea fx:id="fx_description" GridPane.columnIndex="0" GridPane.rowIndex="0" editable="false" wrapText="true"/>
     <TextArea fx:id="fx_solution" GridPane.columnIndex="0" GridPane.rowIndex="1" editable="false" wrapText="true"/>
-    <ListView fx:id="fx_tasks" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"
+    <ListView fx:id="fx_tasks" styleClass="tasks" GridPane.columnIndex="1" GridPane.rowIndex="0" GridPane.rowSpan="2"
               minWidth="90" onMouseClicked="#handleClickView">
     </ListView>
     <GridPane GridPane.columnIndex="0" GridPane.rowIndex="2" GridPane.rowSpan="2" hgap="10">
@@ -30,4 +31,7 @@
             </font>
         </Label>
     </GridPane>
+    <stylesheets>
+        <URL value="@main.css" />
+    </stylesheets>
 </GridPane>
